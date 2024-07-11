@@ -5,6 +5,7 @@ from tkinter import messagebox, font
 from tkinter import filedialog
 from PIL import Image, ImageTk
 
+
 def main():
     # 初始化Tkinter窗口
     root = tk.Tk()
@@ -63,7 +64,7 @@ def main():
     frame_button.pack(fill="x")
     button_container = tk.Frame(frame_button, bg="#f0f0f0")
     button_container.pack(expand=True)
-    button_submit = tk.Button(button_container, text="提交 & 下一条", bg="#4CAF50", fg="white", relief="raised", bd=2,
+    button_submit = tk.Button(button_container, text="保存修改", bg="#4CAF50", fg="white", relief="raised", bd=2,
                               font=global_font, width=20, height=2)
     button_submit.pack(side="left", padx=10, pady=10)
     button_previous = tk.Button(button_container, text="上一条", bg="#2196F3", fg="white", relief="raised", bd=2,
@@ -104,8 +105,16 @@ def main():
         nonlocal record_index, current_file, fixed_data
 
         output_file = os.path.join(output_dir, f'fixed_data{input_index}.json')
+
+        # 添加 image_number 和 image_url 到 fixed_data 的开头
+        annotated_data = {
+            "image_number": input_index,
+            "image_url": f"images/image{input_index}.jpg"
+        }
+        all_data = [annotated_data] + fixed_data
+
         with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(fixed_data, f, ensure_ascii=False, indent=4)
+            json.dump(all_data, f, ensure_ascii=False, indent=4)
 
         print(f"\n标注数据已保存到 {output_file}")
 
@@ -130,7 +139,7 @@ def main():
             fixed_file = os.path.join(output_dir, f'fixed_data{input_index}.json')
             if os.path.exists(fixed_file):
                 with open(fixed_file, 'r', encoding='utf-8') as f:
-                    fixed_data = json.load(f)
+                    fixed_data = json.load(f)[1:]  # 跳过第一个字典
             else:
                 fixed_data = []
 
@@ -217,6 +226,7 @@ def main():
 
     # 启动Tkinter事件循环
     root.mainloop()
+
 
 if __name__ == '__main__':
     main()
