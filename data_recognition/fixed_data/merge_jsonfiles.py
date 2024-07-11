@@ -9,29 +9,15 @@ def merge_json_files(output_filename='FinalResult.json'):
         with open(file_name, 'r', encoding='utf-8') as file:
             try:
                 data = json.load(file)
-                if isinstance(data, dict):
-                    image_info = {
-                        "image_number": data.get("image_number"),
-                        "image_url": data.get("image_url"),
-                        "messages": []
-                    }
-                    # Remove keys that are not questions
-                    keys_to_remove = ["image_number", "image_url"]
-                    for key in keys_to_remove:
-                        if key in data:
-                            del data[key]
-
-                    # Add remaining data as messages
-                    for question, answer_data in data.items():
-                        if isinstance(answer_data, list):
-                            for qa in answer_data:
-                                image_info["messages"].append(qa)
+                if isinstance(data, list):
+                    item_dict = {"image_info": {}, "messages": []}
+                    for item in data:
+                        if "image_number" in item and "image_url" in item:
+                            item_dict["image_info"]["image_number"] = item["image_number"]
+                            item_dict["image_info"]["image_url"] = item["image_url"]
                         else:
-                            image_info["messages"].append(answer_data)
-
-                    merged_data.append(image_info)
-                elif isinstance(data, list):
-                    merged_data.extend(data)
+                            item_dict["messages"].append(item)
+                    merged_data.append(item_dict)
             except json.JSONDecodeError:
                 print(f"Error decoding JSON from file: {file_name}")
 
