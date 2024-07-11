@@ -3,9 +3,10 @@ import json
 from http import HTTPStatus
 import dashscope
 from natsort import natsorted
+import random
 
 # 设置API相关信息
-API_KEY = "sk-5bedea6cbd194f90be7dc63c6cfd75b3"
+API_KEY = "YOUR_API_KEY"
 
 # 定义问题模板
 questions_templates = {
@@ -38,6 +39,7 @@ questions_templates = {
     ]
 }
 
+
 # 定义请求函数
 def send_request(image_path, text):
     # 检查文件是否存在并可读
@@ -58,7 +60,7 @@ def send_request(image_path, text):
     ]
     response = dashscope.MultiModalConversation.call(
         model='qwen-vl-plus',
-        api_key=API_KEY,  # 如果您没有设置环境变量，请在此处填写您的 API Key
+        api_key=API_KEY,  # 如果没有设置环境变量，请在此处填写 API Key
         messages=messages
     )
 
@@ -67,6 +69,7 @@ def send_request(image_path, text):
     else:
         print(f"Error: {response.code}, {response.message}")
         return None
+
 
 # 定义循环调用函数
 def process_images():
@@ -79,17 +82,22 @@ def process_images():
     for idx, image_file in enumerate(sorted_image_files):
         image_path = os.path.join(image_dir, image_file)
         responses = []
-        for key in questions_templates:
-            question = questions_templates[key][idx % len(questions_templates[key])]
-            response = send_request(image_path, question)
-            if response:
-                responses.append({"question": question, "response": response})
+
+        # 随机选择一个类别
+        category = random.choice(list(questions_templates.keys()))
+        # 从选定的类别中随机选择一个问题
+        question = random.choice(questions_templates[category])
+
+        response = send_request(image_path, question)
+        if response:
+            responses.append({"question": question, "response": response})
         if responses:
             with open(os.path.join(response_dir, f"response{idx + 1}.json"), 'w', encoding='utf-8') as f:
                 json.dump(responses, f, ensure_ascii=False, indent=4)
             print(f"Processed {image_file}")
         else:
             print(f"Skipped {image_file} due to accessibility issues")
+
 
 # 执行处理
 if __name__ == "__main__":

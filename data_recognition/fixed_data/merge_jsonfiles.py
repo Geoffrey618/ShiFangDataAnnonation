@@ -24,5 +24,7 @@ def merge_json_files(output_filename='FinalResult.json'):
     with open(output_filename, 'w', encoding='utf-8') as output_file:
         json.dump(merged_data, output_file, ensure_ascii=False, indent=4)
 
+    print("json文件已合并完成")
+
 if __name__ == '__main__':
     merge_json_files()
