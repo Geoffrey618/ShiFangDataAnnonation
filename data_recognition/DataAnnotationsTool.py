@@ -2,7 +2,7 @@ import json
 import os
 import tkinter as tk
 from tkinter import messagebox, font
-from tkinter import filedialog
+
 from PIL import Image, ImageTk
 
 
