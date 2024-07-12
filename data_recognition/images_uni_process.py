@@ -76,7 +76,7 @@ def process_images():
     image_dir = "./images"
     response_dir = "./origin_data"
     os.makedirs(response_dir, exist_ok=True)
-    image_files = [f for f in os.listdir(image_dir) if f.endswith('.jpg')]
+    image_files = [f for f in os.listdir(image_dir) if f.endswith(('.jpg', '.jpeg', '.png', '.bmp', '.webp'))]
     sorted_image_files = natsorted(image_files)  # 自然排序
 
     for idx, image_file in enumerate(sorted_image_files):
