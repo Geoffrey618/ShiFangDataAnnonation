@@ -1,7 +1,7 @@
 import os
 import json
 
-def merge_json_files(output_filename='FinalResult.json'):
+def merge_json_files(output_filename='UnModifiedFinalResult.json'):
     json_files = [f for f in os.listdir('.') if f.endswith('.json') and f.startswith('fixed_data')]
     merged_data = []
 
