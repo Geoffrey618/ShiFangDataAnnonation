@@ -73,7 +73,7 @@ def send_request(image_path, text):
         }
     ]
     response = dashscope.MultiModalConversation.call(
-        model='qwen-vl-chat-v1',
+        model='qwen-vl-plus',
         api_key=API_KEY,  # 如果没有设置环境变量，请在此处填写 API Key
         messages=messages
     )

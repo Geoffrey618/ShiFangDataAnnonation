@@ -5,7 +5,7 @@ import dashscope
 from natsort import natsorted
 
 # 设置API相关信息
-API_KEY = "sk-5bedea6cbd194f90be7dc63c6cfd75b3"
+API_KEY = "YOUR_API_KEY"
 
 # 定义问题模板
 questions_templates = {

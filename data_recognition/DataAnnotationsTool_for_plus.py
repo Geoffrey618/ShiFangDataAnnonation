@@ -84,7 +84,7 @@ def main():
     record_index = 1
     input_index = 1
     question_index = 0
-    total_files = len(os.listdir('./origin_data'))
+    total_files = len(os.listdir('./origin_data')) - 1
     current_data = []
     current_file = ""
     fixed_data = []
