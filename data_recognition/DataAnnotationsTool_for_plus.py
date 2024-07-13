@@ -84,7 +84,7 @@ def main():
     record_index = 1
     input_index = 1
     question_index = 0
-    total_files = len(os.listdir('./origin_data')) - 1
+    total_files = len(os.listdir('./origin_data'))
     current_data = []
     current_file = ""
     fixed_data = []
@@ -131,7 +131,7 @@ def main():
             with open(current_file, 'r', encoding='utf-8') as f:
                 current_data = json.load(f)
 
-            label_filename.config(text=f"标注数据: {input_index}/{total_files}")
+            label_filename.config(text=f"标注数据: {input_index}/{total_files}-1")
 
             load_image(f'./images/image{input_index}.jpg')
 
